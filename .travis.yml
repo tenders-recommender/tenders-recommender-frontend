@@ -21,7 +21,7 @@ install:
 script:
   - pwd
   - npx ngh --repo=https://GH_TOKEN@github.com/tenders-recommender/tenders-recommender.github.io.git
-    --branch=master --dir=dist/tenders-recommender
+    --branch=master --no-silent --dir=dist/tenders-recommender
 
 env:
   global:
