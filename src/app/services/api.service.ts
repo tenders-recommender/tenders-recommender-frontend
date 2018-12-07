@@ -1,12 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { ApiArrayData } from '../model/api-array-data';
-import { Interaction } from '../model/interaction';
-import { AlgorithmsComparisonData } from '../model/plots/algorithms-comparison-data';
-import { KnnParametersComparisonData } from '../model/plots/knn-parameters-comparison-data';
-import { SvdParametersComparisonData } from '../model/plots/svd-parameters-comparison-data';
-import { TimeStepData } from '../model/plots/time-step-data';
-import { Recommendation } from '../model/recommendation';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {ApiArrayData} from '../model/api-array-data';
+import {Interaction} from '../model/interaction';
+import {AlgorithmsComparisonData} from '../model/plots/algorithms-comparison-data';
+import {KnnParametersComparisonData} from '../model/plots/knn-parameters-comparison-data';
+import {SvdParametersComparisonData} from '../model/plots/svd-parameters-comparison-data';
+import {TimeStepData} from '../model/plots/time-step-data';
+import {Recommendation} from '../model/recommendation';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +18,11 @@ export class ApiService {
   private readonly populateInteractionsUrl = this.recommenderServiceUrl + 'populate_interactions/';
   private readonly trainAlgorithmUrl = this.recommenderServiceUrl + 'train_algorithm/';
 
-  private readonly plotsDataRepositoryUrl = 'https://raw.githubusercontent.com/tenders-recommender/tenders-recommender/master/plots/data/';
-  private readonly algorithmsComparisonDataUrl = this.plotsDataRepositoryUrl + 'rmse_alg.json';
-
-  private readonly knnParametersComparisonDataUrl = this.plotsDataRepositoryUrl + 'rmse_knn_params.json';
-  private readonly knnTimeStepDataUrl = this.plotsDataRepositoryUrl + 'rmse_knn_time_step.json';
-  private readonly svdParametersComparisonDataUrl = this.plotsDataRepositoryUrl + 'rmse_svd_params.json';
-  private readonly svdTimeStepDataUrl = this.plotsDataRepositoryUrl + 'rmse_svd_time_step.json';
+  private readonly algorithmsComparisonDataUrl = this.recommenderServiceUrl + 'results/algorithm_comparison';
+  private readonly knnParametersComparisonDataUrl = this.recommenderServiceUrl + 'results/knn';
+  private readonly knnTimeStepDataUrl = this.recommenderServiceUrl + 'results/knn_timesteps';
+  private readonly svdParametersComparisonDataUrl = this.recommenderServiceUrl + 'results/svd';
+  private readonly svdTimeStepDataUrl = this.recommenderServiceUrl + 'results/svd_timesteps';
 
   constructor(private http: HttpClient) {
   }
@@ -46,7 +44,7 @@ export class ApiService {
 
     if (topN) {
       requestOptions = {
-        params: { top: topN }
+        params: {top: topN}
       };
     }
 
