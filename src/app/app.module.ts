@@ -21,7 +21,6 @@ import { FileDropModule } from 'ngx-file-drop';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { AbstractPlotComponent } from './components/plots/abstract-plot/abstract-plot.component';
 import { PlotsComponent } from './components/plots/plots.component';
 import { RecommendationsComponent } from './components/recommendations/recommendations.component';
 import { TrainingComponent } from './components/training/training.component';
@@ -31,7 +30,6 @@ import { TrainingComponent } from './components/training/training.component';
     AppComponent,
     HomeComponent,
     PlotsComponent,
-    AbstractPlotComponent,
     RecommendationsComponent,
     TrainingComponent
   ],
