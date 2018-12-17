@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-training',
@@ -6,22 +7,39 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./training.component.scss']
 })
 export class TrainingComponent implements OnInit {
+  private fileReader: FileReader;
+  private contentToUpload: string;
+  private uploading = false;
+  private training = false;
 
-  constructor() {
+  constructor(private readonly apiService: ApiService) {
   }
 
   ngOnInit() {
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      this.contentToUpload = fileReader.result as string;
+    };
+
+    this.fileReader = fileReader;
   }
 
   public addFile(event) {
-    console.log(event);
+    const fileToUpload: File = event.target.files[0];
+    this.fileReader.readAsText(fileToUpload);
   }
 
-  public fileOver(event) {
-    console.log(event);
+  public uploadFile() {
+    if (this.contentToUpload != null) {
+      this.uploading = true;
+      this.apiService.populateInteractions(this.contentToUpload)
+        .then(() => this.uploading = false);
+    }
   }
 
-  public fileLeave(event) {
-    console.log(event);
+  public trainAlgorithm() {
+    this.training = true;
+    this.apiService.trainAlgorithm()
+      .then(() => this.training = false);
   }
 }

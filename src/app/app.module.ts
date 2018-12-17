@@ -11,7 +11,8 @@ import {
   MatPaginatorModule,
   MatTableModule,
   MatTabsModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,16 +21,8 @@ import { FileDropModule } from 'ngx-file-drop';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { AlgorithmsComparisonPlotComponent } from './components/plots/algorithms-comparison-plot/algorithms-comparison-plot.component';
-import {
-  KnnParametersComparisonPlotComponent
-} from './components/plots/knn-parameters-comparison-plot/knn-parameters-comparison-plot.component';
-import { KnnTimeStepPlotComponent } from './components/plots/knn-time-step-plot/knn-time-step-plot.component';
+import { AbstractPlotComponent } from './components/plots/abstract-plot/abstract-plot.component';
 import { PlotsComponent } from './components/plots/plots.component';
-import {
-  SvdParametersComparisonPlotComponent
-} from './components/plots/svd-parameters-comparison-plot/svd-parameters-comparison-plot.component';
-import { SvdTimeStepPlotComponent } from './components/plots/svd-time-step-plot/svd-time-step-plot.component';
 import { RecommendationsComponent } from './components/recommendations/recommendations.component';
 import { TrainingComponent } from './components/training/training.component';
 
@@ -38,12 +31,8 @@ import { TrainingComponent } from './components/training/training.component';
     AppComponent,
     HomeComponent,
     PlotsComponent,
+    AbstractPlotComponent,
     RecommendationsComponent,
-    AlgorithmsComparisonPlotComponent,
-    KnnParametersComparisonPlotComponent,
-    KnnTimeStepPlotComponent,
-    SvdTimeStepPlotComponent,
-    SvdParametersComparisonPlotComponent,
     TrainingComponent
   ],
   imports: [
@@ -62,7 +51,8 @@ import { TrainingComponent } from './components/training/training.component';
     MatIconModule,
     MatCardModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [

@@ -2,10 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {ApiArrayData} from '../model/api-array-data';
 import {Interaction} from '../model/interaction';
-import {AlgorithmsComparisonData} from '../model/plots/algorithms-comparison-data';
-import {KnnParametersComparisonData} from '../model/plots/knn-parameters-comparison-data';
-import {SvdParametersComparisonData} from '../model/plots/svd-parameters-comparison-data';
-import {TimeStepData} from '../model/plots/time-step-data';
+import { PlotType } from '../model/plots/plot-type.enum';
 import {Recommendation} from '../model/recommendation';
 
 @Injectable({
@@ -14,29 +11,22 @@ import {Recommendation} from '../model/recommendation';
 export class ApiService {
   private readonly recommenderServiceUrl = 'http://localhost:5000/';
   private readonly recommendationsUrl = this.recommenderServiceUrl + 'recommendations/';
-  private readonly currentDataRmseUrl = this.recommenderServiceUrl + 'rmse/';
-  private readonly populateInteractionsUrl = this.recommenderServiceUrl + 'populate_interactions/';
-  private readonly trainAlgorithmUrl = this.recommenderServiceUrl + 'train_algorithm/';
-
-  private readonly algorithmsComparisonDataUrl = this.recommenderServiceUrl + 'results/algorithm_comparison';
-  private readonly knnParametersComparisonDataUrl = this.recommenderServiceUrl + 'results/knn';
-  private readonly knnTimeStepDataUrl = this.recommenderServiceUrl + 'results/knn_timesteps';
-  private readonly svdParametersComparisonDataUrl = this.recommenderServiceUrl + 'results/svd';
-  private readonly svdTimeStepDataUrl = this.recommenderServiceUrl + 'results/svd_timesteps';
+  private readonly currentDataRmseUrl = this.recommenderServiceUrl + 'rmse';
+  private readonly populateInteractionsUrl = this.recommenderServiceUrl + 'populate_interactions';
+  private readonly trainAlgorithmUrl = this.recommenderServiceUrl + 'train_algorithm';
+  private readonly svgRepositoryUrl = 'https://raw.githubusercontent.com/tenders-recommender/tenders-recommender/master/plots/';
 
   constructor(private http: HttpClient) {
   }
 
-  public populateInteractions(interactions: ReadonlyArray<Interaction>): Promise<boolean> {
-    return this.http.post(this.populateInteractionsUrl, interactions)
-      .toPromise()
-      .then(() => true, () => false);
+  public populateInteractions(interactions: ReadonlyArray<Interaction> | string): Promise<boolean> {
+    return this.http.post<boolean>(this.populateInteractionsUrl, interactions)
+      .toPromise();
   }
 
   public trainAlgorithm(): Promise<boolean> {
-    return this.http.get(this.trainAlgorithmUrl)
-      .toPromise()
-      .then(() => true, () => false);
+    return this.http.get<boolean>(this.trainAlgorithmUrl)
+      .toPromise();
   }
 
   public getRecommendations(userId: number, topN?: number): Promise<ReadonlyArray<Recommendation>> {
@@ -58,28 +48,8 @@ export class ApiService {
       .toPromise();
   }
 
-  public getAlgorithmsComparisonData(): Promise<ReadonlyArray<AlgorithmsComparisonData>> {
-    return this.http.get<ReadonlyArray<AlgorithmsComparisonData>>(this.algorithmsComparisonDataUrl)
-      .toPromise();
-  }
-
-  public getKnnParametersComparisonData(): Promise<ReadonlyArray<KnnParametersComparisonData>> {
-    return this.http.get<ReadonlyArray<KnnParametersComparisonData>>(this.knnParametersComparisonDataUrl)
-      .toPromise();
-  }
-
-  public getKnnTimeStepData(): Promise<ReadonlyArray<TimeStepData>> {
-    return this.http.get<ReadonlyArray<TimeStepData>>(this.knnTimeStepDataUrl)
-      .toPromise();
-  }
-
-  public getSvdParametersComparisonData(): Promise<SvdParametersComparisonData> {
-    return this.http.get<SvdParametersComparisonData>(this.svdParametersComparisonDataUrl)
-      .toPromise();
-  }
-
-  public getSvdTimeStepData(): Promise<ReadonlyArray<TimeStepData>> {
-    return this.http.get<ReadonlyArray<TimeStepData>>(this.svdTimeStepDataUrl)
+  public getPlotSvg(plotType: PlotType): Promise<string> {
+    return this.http.get(this.svgRepositoryUrl + plotType, { responseType: 'text' })
       .toPromise();
   }
 }
