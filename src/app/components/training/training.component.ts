@@ -7,10 +7,10 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./training.component.scss']
 })
 export class TrainingComponent implements OnInit {
+  public uploading = false;
+  public training = false;
   private fileReader: FileReader;
   private contentToUpload: string;
-  private uploading = false;
-  private training = false;
 
   constructor(private readonly apiService: ApiService) {
   }
